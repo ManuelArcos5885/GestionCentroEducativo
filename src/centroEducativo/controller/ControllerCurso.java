@@ -54,24 +54,24 @@ public class ControllerCurso {
 	 * 
 	 */
 	
-	private static void cargarSiguienteRegistro() {
-		try {
-			Statement st = conn.createStatement();
-			
-			ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id > " + jtfid.getText() + " order by id limit 1;");
-			
-			if (rs.next()) {
+//	private static void cargarSiguienteRegistro() {
+//		try {
+//			Statement st = conn.createStatement();
+//			
+//			ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id > " + jtfid.getText() + " order by id limit 1;");
+//			
+//			if (rs.next()) {
 				
-			}
-			rs.close();
-			st.close();
+//			}
+//			rs.close();
+//			st.close();
 			
-		} catch (Exception e) {
+//		} catch (Exception e) {
 			// TODO: handle exception
-		}
+//		}
 		
 		
-	}
+//	}
 	
 	/**
 	 * 
