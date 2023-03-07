@@ -24,8 +24,9 @@ public class JDBCPropiedades {
 			propiedades = new Properties();
 		    
 			try {
-				File file = new File("./src/centroDeucativo/PropiedadesBaseDatos.properties");
+				File file = new File("./src/centroEducativo/PropiedadesBaseDatos.properties");
 				System.out.println(file.exists());
+				
 				propiedades.load(new FileReader(file));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();

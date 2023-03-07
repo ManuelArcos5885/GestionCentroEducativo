@@ -20,7 +20,6 @@ public class ConnectionManager {
 		while (!conexion.isValid(5)) {
 			conectar();
 		}
-		
 		return conexion;
 	}
 	
@@ -28,12 +27,13 @@ public class ConnectionManager {
 	
 	private static void conectar () throws SQLException {
 		String driver = JDBCPropiedades.getProperty("JDBC_DRIVER_CLASS");
-		String user = JDBCPropiedades.getProperty("JDBC_USER");
-		String password = JDBCPropiedades.getProperty("JDBC_PASSWORD");
+		String user = JDBCPropiedades.getProperty("JDBC_USUARIO");
+		String password = JDBCPropiedades.getProperty("JDBC_CONTRASENA");
 		String host = JDBCPropiedades.getProperty("JDBC_HOST");
-		String schema = JDBCPropiedades.getProperty("JDBC_SCHEMA_NAME");
+		String schema = JDBCPropiedades.getProperty("JDBC_NOMBRE_ESQUEMA");
 		String properties = JDBCPropiedades.getProperty("JDBC_PROPERTIES");
-
+		
+	
 		
 		try {
 			Class.forName(driver);

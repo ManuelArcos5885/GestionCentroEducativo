@@ -21,13 +21,14 @@ public class ControllerCurso {
 	private static Connection crearConexion() {
 		try {
 			conn = ConnectionManager.getConexion();
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("no se pudo");
 		}
 		return conn;
 	}
 	
-	private static Curso cargarPrimerRegistro() throws SQLException {	
+	public static Curso cargarPrimerRegistro() throws SQLException {	
 		Statement st = conn.createStatement();
 		
 		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso order by id limit 1;");
@@ -54,7 +55,7 @@ public class ControllerCurso {
 	 * 
 	 */
 	
-//	private static void cargarSiguienteRegistro() {
+//	public static void cargarSiguienteRegistro() {
 //		try {
 //			Statement st = conn.createStatement();
 //			
@@ -78,7 +79,7 @@ public class ControllerCurso {
 	 * 
 	 */
 	
-//	private static void cargarAnteriorRegistro() {
+//	public static void cargarAnteriorRegistro() {
 //		try {
 //			Statement st = conn.createStatement();
 //			
@@ -104,11 +105,12 @@ public class ControllerCurso {
 	 * 
 	 */
 	
-	private static Curso cargarUltimoRegistro() throws SQLException {
+	public static Curso cargarUltimoRegistro() throws SQLException {
+		conn = ConnectionManager.getConexion();
 		Statement st = conn.createStatement();
 		
 		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso order by id desc limit 1;");
-		
+		System.out.println("hola");
 		Curso curso = null;
 		if (rs.next()) {
 			curso = new Curso();
