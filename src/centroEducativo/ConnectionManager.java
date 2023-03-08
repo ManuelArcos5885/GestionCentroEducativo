@@ -39,7 +39,7 @@ public class ConnectionManager {
 			Class.forName(driver);
 		   
 			conexion = (Connection) DriverManager.getConnection ("jdbc:mysql://" + host + "/" + schema + properties, user, password);			   
-		}
+			}
 		catch (ClassNotFoundException ex) {
 			System.out.println("Imposible acceder al driver Mysql");
 		}

@@ -8,11 +8,13 @@ import java.awt.Insets;
 import java.awt.Font;
 import javax.swing.JTextField;
 
+import centroEducativo.ConnectionManager;
 import centroEducativo.controller.ControllerCurso;
 import centroEducativo.model.Curso;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,12 +23,12 @@ import java.awt.event.ActionEvent;
 public class PanelCurso extends JPanel {
 	private JTextField textField_Id;
 	private JTextField textField_Descrip;
+	
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelCurso() {
-		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -89,27 +91,66 @@ public class PanelCurso extends JPanel {
 		
 		JButton btnNewButton_2 = new JButton("<<");
 		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
+			
+			public void actionPerformed(ActionEvent e) {
+				Curso curso = null;
 				try {
-					Curso curso = ControllerCurso.cargarUltimoRegistro();
+					curso = ControllerCurso.cargarPrimerRegistro();
 					textField_Id.setText("" + curso.getId());
 					textField_Descrip.setText(curso.getDescripcion());
-					
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+			}
+		});
+		
+
+		panel.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("<");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Curso curso = null;
+				try {
+					curso = ControllerCurso.cargarAnteriorRegistro(textField_Id.getText());
+					textField_Id.setText("" + curso.getId());
+					textField_Descrip.setText(curso.getDescripcion());
+				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-		panel.add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("<");
 		panel.add(btnNewButton_3);
 		
 		JButton btnNewButton_1 = new JButton(">");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Curso curso = null;
+				try {
+					curso = ControllerCurso.cargarSiguienteRegistro(textField_Id.getText());
+					textField_Id.setText("" + curso.getId());
+					textField_Descrip.setText(curso.getDescripcion());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_5 = new JButton(">>");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Curso curso = null;
+				try {
+					curso = ControllerCurso.cargarUltimoRegistro();
+					textField_Id.setText("" + curso.getId());
+					textField_Descrip.setText(curso.getDescripcion());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel.add(btnNewButton_5);
 		
 		JPanel panel_1 = new JPanel();
@@ -131,8 +172,6 @@ public class PanelCurso extends JPanel {
 		panel_1.add(btnNewButton);
 
 	}
-	
-	
 	
 
 }

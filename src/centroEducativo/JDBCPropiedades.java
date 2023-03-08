@@ -25,7 +25,7 @@ public class JDBCPropiedades {
 		    
 			try {
 				File file = new File("./src/centroEducativo/PropiedadesBaseDatos.properties");
-				System.out.println(file.exists());
+				System.out.println("Existe: " + file.exists());
 				
 				propiedades.load(new FileReader(file));
 			} catch (FileNotFoundException e) {

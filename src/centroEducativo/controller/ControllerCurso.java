@@ -14,11 +14,11 @@ public class ControllerCurso {
 	
 	
 	public static void main(String[] args) {
-
+		
 	}
 	
 	
-	private static Connection crearConexion() {
+	public static Connection crearConexion() {
 		try {
 			conn = ConnectionManager.getConexion();
 			
@@ -29,6 +29,7 @@ public class ControllerCurso {
 	}
 	
 	public static Curso cargarPrimerRegistro() throws SQLException {	
+		crearConexion();
 		Statement st = conn.createStatement();
 		
 		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso order by id limit 1;");
@@ -44,7 +45,37 @@ public class ControllerCurso {
 		}
 		rs.close();
 		st.close();
+		conn.close();
+		return curso;
+		
+		
+	}
 	
+	/**
+	 * @return 
+	 * @throws SQLException 
+	 * 
+	 * 
+	 */
+	
+	public static Curso cargarSiguienteRegistro(String id) throws SQLException {
+		crearConexion();
+
+		Statement st = conn.createStatement();
+		
+		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id > " + id + " order by id limit 1;");
+		
+		Curso curso = null;
+		if (rs.next()) {
+			curso = new Curso();
+			
+			curso.setId(rs.getInt("id"));		
+			curso.setDescripcion(rs.getString("descripcion"));
+		}
+		rs.close();
+		st.close();
+
+		conn.close();
 		return curso;
 		
 		
@@ -55,48 +86,28 @@ public class ControllerCurso {
 	 * 
 	 */
 	
-//	public static void cargarSiguienteRegistro() {
-//		try {
-//			Statement st = conn.createStatement();
-//			
-//			ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id > " + jtfid.getText() + " order by id limit 1;");
-//			
-//			if (rs.next()) {
-				
-//			}
-//			rs.close();
-//			st.close();
+	public static Curso cargarAnteriorRegistro(String id) throws SQLException {
+		crearConexion();
+
+		Statement st = conn.createStatement();
+		
+		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id < " + id + " order by id limit 1;");
+		
+		Curso curso = null;
+		if (rs.next()) {
+			curso = new Curso();
 			
-//		} catch (Exception e) {
-			// TODO: handle exception
-//		}
+			curso.setId(rs.getInt("id"));		
+			curso.setDescripcion(rs.getString("descripcion"));
+		}
+		rs.close();
+		st.close();
+
+		conn.close();
+		return curso;
 		
 		
-//	}
-	
-	/**
-	 * 
-	 * 
-	 */
-	
-//	public static void cargarAnteriorRegistro() {
-//		try {
-//			Statement st = conn.createStatement();
-//			
-//			ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id < " + jtfid.getText() + " order by id desc limit 1;");
-//			
-//			if (rs.next()) {
-//				
-//			}
-//			rs.close();
-//			st.close();
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		
-//		
-//	}
+	}
 	
 	/**
 	 * @return 
@@ -106,7 +117,7 @@ public class ControllerCurso {
 	 */
 	
 	public static Curso cargarUltimoRegistro() throws SQLException {
-		conn = ConnectionManager.getConexion();
+		crearConexion();
 		Statement st = conn.createStatement();
 		
 		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso order by id desc limit 1;");
@@ -122,7 +133,7 @@ public class ControllerCurso {
 		}
 		rs.close();
 		st.close();
-	
+		conn.close();
 		return curso;
 		
 		
