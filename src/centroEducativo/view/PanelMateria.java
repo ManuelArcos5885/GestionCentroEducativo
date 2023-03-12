@@ -272,7 +272,7 @@ public class PanelMateria extends JPanel {
 		botomPrimero.setEnabled(true);
 		botomAnterior.setEnabled(true);
 		botomUltimo.setEnabled(true);
-		botomSiguiente.setEnabled(true);
+		botomSiguiente.setEnabled(true); 
 		
 		textFieldId.setText("" + materia.getId());
 		textField_Nombre.setText(materia.getNombre());
