@@ -93,7 +93,7 @@ public class ControllerCurso {
 
 		Statement st = conn.createStatement();
 		
-		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id < " + id + " order by id limit 1;");
+		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso where id < " + id + " order by id desc limit 1;");
 		
 		Curso curso = null;
 		if (rs.next()) {
