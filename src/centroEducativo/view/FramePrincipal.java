@@ -29,6 +29,8 @@ public class FramePrincipal extends JFrame {
 		JTabbedPane tabedPane = new JTabbedPane();
 		
 		tabedPane.add("Curso",new PanelCurso());
+		tabedPane.add("Materia",new PanelMateria());
+	
 		
 		
 		

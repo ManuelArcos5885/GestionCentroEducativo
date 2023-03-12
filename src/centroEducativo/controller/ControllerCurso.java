@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import centroEducativo.ConnectionManager;
 import centroEducativo.model.Curso;
@@ -139,6 +141,28 @@ public class ControllerCurso {
 		
 	}
 	
+	/**
+	 * @throws SQLException 
+	 * 
+	 * 
+	 */
 	
+	public static List<Curso> cargarTodasId() throws SQLException {
+		crearConexion();
+		List<Curso> listaId = new ArrayList<Curso>();
+		
+		Statement st = conn.createStatement();
+		
+		ResultSet rs = st.executeQuery("Select * from centroeducativo.curso");
+		Curso curso = null;
+		while (rs.next()) {
+			curso = new Curso();
+			curso.setId(rs.getInt("id"));
+			curso.setDescripcion(rs.getString("descripcion"));
+			listaId.add(curso);
+			
+		}
+		return listaId;
+	}
 
 }
