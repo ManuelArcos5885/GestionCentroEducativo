@@ -30,8 +30,9 @@ public class FramePrincipal extends JFrame {
 		
 		tabedPane.add("Curso",new PanelCurso());
 		tabedPane.add("Materia",new PanelMateria());
-	
-		
+		tabedPane.add("Estudiante",new PanelEstudiante());
+		tabedPane.add("Profesor",new PanelProfesor());
+		tabedPane.add("ValoracionMateria",new PanelValoracion());
 		
 		
 		this.setContentPane(tabedPane);

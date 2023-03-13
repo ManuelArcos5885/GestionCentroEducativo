@@ -11,8 +11,10 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 
 import centroEducativo.controller.ControllerCurso;
+import centroEducativo.controller.ControllerEstudiante;
 import centroEducativo.controller.ControllerMateria;
 import centroEducativo.model.Curso;
+import centroEducativo.model.Estudiante;
 import centroEducativo.model.Materia;
 
 import javax.swing.JComboBox;
@@ -22,19 +24,24 @@ import java.sql.SQLException;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class PanelMateria extends JPanel {
+public class PanelEstudiante extends JPanel {
 	private JTextField textFieldId;
 	private JTextField textField_Nombre;
-	private JTextField textField_Acronimo;
-	JComboBox<Curso> IdCursoCombo = new JComboBox<Curso>();
+	private JTextField textField_Apellido1;
 	
 	JButton botomPrimero, botomAnterior, botomSiguiente, botomUltimo;
+	private JTextField textField_email;
+	private JTextField textField_Direccion;
+	private JTextField textField_Apellido2;
+	private JTextField textField_dni;
+	private JTextField textField_telefono;
 	/**
 	 * Create the panel.
 	 * @throws SQLException 
 	 */
-	public PanelMateria(){
+	public PanelEstudiante(){
 		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 //		gridBagLayout.columnWidths = new int[]{150, 154, 0};
 //		gridBagLayout.rowHeights = new int[]{29, 0, 0, 0, 0, 0, 0, 0};
 //		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
@@ -44,10 +51,10 @@ public class PanelMateria extends JPanel {
 		JLabel lblNewLabel = new JLabel("Gestion Materia");
 		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 22));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridwidth = 2;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel.gridwidth = 3;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
-		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridx = 2;
 		gbc_lblNewLabel.gridy = 0;
 		add(lblNewLabel, gbc_lblNewLabel);
 		
@@ -62,12 +69,29 @@ public class PanelMateria extends JPanel {
 		textFieldId = new JTextField();
 		textFieldId.setEnabled(false);
 		GridBagConstraints gbc_textFieldId = new GridBagConstraints();
-		gbc_textFieldId.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldId.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldId.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldId.gridx = 1;
 		gbc_textFieldId.gridy = 2;
 		add(textFieldId, gbc_textFieldId);
 		textFieldId.setColumns(10);
+		
+		JLabel lblNewLabel_7 = new JLabel("direccion:");
+		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
+		gbc_lblNewLabel_7.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_7.gridx = 5;
+		gbc_lblNewLabel_7.gridy = 2;
+		add(lblNewLabel_7, gbc_lblNewLabel_7);
+		
+		textField_Direccion = new JTextField();
+		GridBagConstraints gbc_textField_Direccion = new GridBagConstraints();
+		gbc_textField_Direccion.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_Direccion.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_Direccion.gridx = 6;
+		gbc_textField_Direccion.gridy = 2;
+		add(textField_Direccion, gbc_textField_Direccion);
+		textField_Direccion.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Nombre:");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
@@ -79,14 +103,31 @@ public class PanelMateria extends JPanel {
 		
 		textField_Nombre = new JTextField();
 		GridBagConstraints gbc_textField_Nombre = new GridBagConstraints();
-		gbc_textField_Nombre.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_Nombre.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_Nombre.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_Nombre.gridx = 1;
 		gbc_textField_Nombre.gridy = 3;
 		add(textField_Nombre, gbc_textField_Nombre);
 		textField_Nombre.setColumns(10);
 		
-		JLabel lblNewLabel_3 = new JLabel("Acronimo: ");
+		JLabel lblNewLabel_6 = new JLabel("email:");
+		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
+		gbc_lblNewLabel_6.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_6.gridx = 5;
+		gbc_lblNewLabel_6.gridy = 3;
+		add(lblNewLabel_6, gbc_lblNewLabel_6);
+		
+		textField_email = new JTextField();
+		GridBagConstraints gbc_textField_email = new GridBagConstraints();
+		gbc_textField_email.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_email.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_email.gridx = 6;
+		gbc_textField_email.gridy = 3;
+		add(textField_email, gbc_textField_email);
+		textField_email.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Apellido 1:");
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
@@ -94,16 +135,33 @@ public class PanelMateria extends JPanel {
 		gbc_lblNewLabel_3.gridy = 4;
 		add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		textField_Acronimo = new JTextField();
-		GridBagConstraints gbc_textField_Acronimo = new GridBagConstraints();
-		gbc_textField_Acronimo.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_Acronimo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_Acronimo.gridx = 1;
-		gbc_textField_Acronimo.gridy = 4;
-		add(textField_Acronimo, gbc_textField_Acronimo);
-		textField_Acronimo.setColumns(10);
+		textField_Apellido1 = new JTextField();
+		GridBagConstraints gbc_textField_Apellido1 = new GridBagConstraints();
+		gbc_textField_Apellido1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_Apellido1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_Apellido1.gridx = 1;
+		gbc_textField_Apellido1.gridy = 4;
+		add(textField_Apellido1, gbc_textField_Apellido1);
+		textField_Apellido1.setColumns(10);
 		
-		JLabel lblNewLabel_4 = new JLabel("Id curso:");
+		JLabel lblNewLabel_8 = new JLabel("telefono:");
+		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
+		gbc_lblNewLabel_8.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_8.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_8.gridx = 5;
+		gbc_lblNewLabel_8.gridy = 4;
+		add(lblNewLabel_8, gbc_lblNewLabel_8);
+		
+		textField_telefono = new JTextField();
+		GridBagConstraints gbc_textField_telefono = new GridBagConstraints();
+		gbc_textField_telefono.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_telefono.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_telefono.gridx = 6;
+		gbc_textField_telefono.gridy = 4;
+		add(textField_telefono, gbc_textField_telefono);
+		textField_telefono.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Apellido 2:");
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
 		gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
@@ -111,30 +169,46 @@ public class PanelMateria extends JPanel {
 		gbc_lblNewLabel_4.gridy = 5;
 		add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
+		textField_Apellido2 = new JTextField();
+		GridBagConstraints gbc_textField_Apellido2 = new GridBagConstraints();
+		gbc_textField_Apellido2.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_Apellido2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_Apellido2.gridx = 1;
+		gbc_textField_Apellido2.gridy = 5;
+		add(textField_Apellido2, gbc_textField_Apellido2);
+		textField_Apellido2.setColumns(10);
 		
-		GridBagConstraints gbc_IdCursoCombo = new GridBagConstraints();
-		gbc_IdCursoCombo.insets = new Insets(0, 0, 5, 0);
-		gbc_IdCursoCombo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_IdCursoCombo.gridx = 1;
-		gbc_IdCursoCombo.gridy = 5;
-		add(IdCursoCombo, gbc_IdCursoCombo);
+		JLabel lblNewLabel_5 = new JLabel("dni:");
+		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
+		gbc_lblNewLabel_5.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_5.gridx = 0;
+		gbc_lblNewLabel_5.gridy = 6;
+		add(lblNewLabel_5, gbc_lblNewLabel_5);
+		
+		textField_dni = new JTextField();
+		GridBagConstraints gbc_textField_dni = new GridBagConstraints();
+		gbc_textField_dni.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_dni.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_dni.gridx = 1;
+		gbc_textField_dni.gridy = 6;
+		add(textField_dni, gbc_textField_dni);
+		textField_dni.setColumns(10);
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridwidth = 2;
-		gbc_panel.insets = new Insets(0, 0, 0, 5);
+		gbc_panel.gridwidth = 7;
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 6;
+		gbc_panel.gridy = 8;
 		add(panel, gbc_panel);
 		
 		botomPrimero = new JButton("<<");
 		botomPrimero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Materia materia = null;
-					materia = ControllerMateria.cargarPrimerRegistro();
-					cargarPantalla(materia);
+
+					cargarPantalla(ControllerEstudiante.cargarPrimerRegistro());
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -147,7 +221,7 @@ public class PanelMateria extends JPanel {
 		botomAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cargarPantalla(ControllerMateria.cargarAnteriorRegistro(textFieldId.getText()));
+					cargarPantalla(ControllerEstudiante.cargarAnteriorRegistro(textFieldId.getText()));
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -159,7 +233,7 @@ public class PanelMateria extends JPanel {
 		botomSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cargarPantalla(ControllerMateria.cargarSiguienteRegistro(textFieldId.getText()));
+					cargarPantalla(ControllerEstudiante.cargarSiguienteRegistro(textFieldId.getText()));
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -172,7 +246,7 @@ public class PanelMateria extends JPanel {
 		botomUltimo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cargarPantalla(ControllerMateria.cargarUltimoRegistro());
+					cargarPantalla(ControllerEstudiante.cargarUltimoRegistro());
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -215,10 +289,10 @@ public class PanelMateria extends JPanel {
 		panel.add(botomEliminar);
 		
 		try {
-			cargarIdCursoEnCombo();
-			Materia materia = null;
-			materia = ControllerMateria.cargarPrimerRegistro();
-			cargarPantalla(materia);
+			
+			Estudiante estudiante = null;
+			estudiante = ControllerEstudiante.cargarPrimerRegistro();
+			cargarPantalla(estudiante);
 			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -236,8 +310,12 @@ public class PanelMateria extends JPanel {
 	public void limpiarCeldas() {
 		textFieldId.setText("" + 0);
 		textField_Nombre.setText("");
-		textField_Acronimo.setText("");
-		IdCursoCombo.setSelectedIndex(0);
+		textField_Apellido1.setText("");
+		textField_Apellido2.setText("");
+		textField_dni.setText("");
+		textField_telefono.setText("");
+		textField_Direccion.setText("");
+		textField_email.setText("");
 	}
 	
 	/**
@@ -249,17 +327,21 @@ public class PanelMateria extends JPanel {
 	 */
 	
 	public void guardar() throws SQLException {
-		Materia materiaNueva = new Materia();
+		Estudiante estudianteNuevo = new Estudiante();
 		
-		materiaNueva.setId(Integer.parseInt(textFieldId.getText()));
-		materiaNueva.setNombre(textField_Nombre.getText());
-		materiaNueva.setAcronimo(textField_Acronimo.getText());
-		Curso curso = (Curso) IdCursoCombo.getSelectedItem();
+		estudianteNuevo.setId(Integer.parseInt(textFieldId.getText()));
+		estudianteNuevo.setNombre(textField_Nombre.getText());
+		estudianteNuevo.setApellido1(textField_Apellido1.getText());
+		estudianteNuevo.setApellido2(textField_Apellido2.getText());
+		estudianteNuevo.setDireccion(textField_Direccion.getText());
+		estudianteNuevo.setDni(textField_dni.getText());
+		estudianteNuevo.setEmail(textField_email.getText());
+		estudianteNuevo.setTelefono(Integer.parseInt(textField_telefono.getText()));
 		
-		materiaNueva.setCursoId(curso.getId());
+
 		String error = "Algo a fallado";
-		if (materiaNueva.getId() == 0) {
-			int nuevoIdInsertado = ControllerMateria.insertarRegistro(materiaNueva);
+		if (estudianteNuevo.getId() == 0) {
+			int nuevoIdInsertado = ControllerEstudiante.insertarRegistro(estudianteNuevo);
 			if (nuevoIdInsertado < 1) {
 				JOptionPane.showMessageDialog(null, error);
 			}
@@ -271,50 +353,42 @@ public class PanelMateria extends JPanel {
 			
 		}
 		else {
-			if (ControllerMateria.modificarRegistro(materiaNueva) != 1) {
+			if (ControllerEstudiante.modificarRegistro(estudianteNuevo) != 1) {
 				JOptionPane.showMessageDialog(null, error);
 			}
 		}
 	}
 	
 	
-	public void cargarPantalla(Materia materia) throws SQLException {
+	public void cargarPantalla(Estudiante estudiante) throws SQLException {
 		botomPrimero.setEnabled(true);
 		botomAnterior.setEnabled(true);
 		botomUltimo.setEnabled(true);
 		botomSiguiente.setEnabled(true); 
 		
-		textFieldId.setText("" + materia.getId());
-		textField_Nombre.setText(materia.getNombre());
-		textField_Acronimo.setText(materia.getAcronimo());
+		textFieldId.setText("" + estudiante.getId());
+		textField_Nombre.setText(estudiante.getNombre());
+		textField_Apellido1.setText(estudiante.getApellido1());
+		textField_Apellido2.setText(estudiante.getApellido2());
+		textField_Direccion.setText(estudiante.getDireccion());
+		textField_dni.setText(estudiante.getDni());
+		textField_email.setText(estudiante.getEmail());
+		textField_telefono.setText("" + estudiante.getTelefono());
 		
-		for (int i = 0; i < IdCursoCombo.getItemCount(); i++) {
-			
-			if (materia.getCursoId() == IdCursoCombo.getItemAt(i).getId()) {
-				IdCursoCombo.setSelectedIndex(i);
-			}
-			
-		}
 		
-		if(materia.getId() == IdCursoCombo.getItemAt(0).getId()) {
-			botomPrimero.setEnabled(false);
-			botomAnterior.setEnabled(false);
-		}
-		if(materia.getId() == ControllerMateria.cargarUltimoRegistro().getId()) {
+		
+		if(estudiante.getId() == ControllerEstudiante.cargarUltimoRegistro().getId()) {
 			botomUltimo.setEnabled(false);
 			botomSiguiente.setEnabled(false);
 		}
-		
-		
-		
-		
-	}
-	
-	public void cargarIdCursoEnCombo() throws SQLException {
-		List<Curso> cursos = ControllerCurso.cargarTodasId();
-		for (Curso curso : cursos) {
-			IdCursoCombo.addItem(curso);
+		if(estudiante.getId() == ControllerMateria.cargarPrimerRegistro().getId()) {
+			botomPrimero.setEnabled(false);
+			botomAnterior.setEnabled(false);
 		}
+		
+		
+		
+		
 	}
 	
 	public void eliminarRegistro() throws NumberFormatException, SQLException {
@@ -324,14 +398,14 @@ public class PanelMateria extends JPanel {
 		
 		if (eleccion == JOptionPane.YES_OPTION) {
 		
-			int row = ControllerMateria.eliminarRegistro(Integer.parseInt(textFieldId.getText()));
+			int row = ControllerEstudiante.eliminarRegistro(Integer.parseInt(textFieldId.getText()));
 			
 			if (row !=1) {
 				JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "se ha eliminado correctamente el registro");
-				cargarPantalla(ControllerMateria.cargarUltimoRegistro());
+				cargarPantalla(ControllerEstudiante.cargarUltimoRegistro());
 			}
 		}
 	}

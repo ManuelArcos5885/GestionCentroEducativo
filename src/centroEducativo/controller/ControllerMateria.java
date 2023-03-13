@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mysql.cj.result.Row;
 
 import centroEducativo.ConnectionManager;
 import centroEducativo.model.Curso;
@@ -51,7 +55,7 @@ public class ControllerMateria {
 				materia.setNombre(rs.getString("nombre"));
 				materia.setAcronimo(rs.getString("acronimo"));
 				materia.setCursoId(rs.getInt("curso_id"));
-				System.out.println(materia.toString());
+				
 			} 
 			rs.close();
 			st.close();
@@ -137,6 +141,8 @@ public class ControllerMateria {
 		PreparedStatement ps = conn.prepareStatement(
 				"insert into materia (id, nombre, acronimo, curso_id) "
 				+ " values (?, ?, ?, ?)");
+		
+		int siguienteIdValida = siguienteIdValida();
 		ps.setInt(1, siguienteIdValida());
 		ps.setString(2, materiaNueva.getNombre());
 		ps.setString(3, materiaNueva.getAcronimo());
@@ -147,7 +153,7 @@ public class ControllerMateria {
 		
 		conn.close();
 		ps.close();
-		return siguienteIdValida();
+		return siguienteIdValida;
 		
 	}
 	
@@ -198,5 +204,57 @@ public class ControllerMateria {
 		return siguienteIdValida;
 	}
 	
+	/**
+	 * @throws SQLException 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	public static int eliminarRegistro(int id) throws SQLException {
+		crearConexion();
+		
+		
+		
+		PreparedStatement ps = conn.prepareStatement("DELETE FROM materia WHERE id = ?;");
+		
+		ps.setInt(1, id);
+		
+		int row = ps.executeUpdate();
+		conn.close();
+		return row;
+	}
+	/**
+	 * @throws SQLException 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
+	public static List<Materia> cargarTodasId() throws SQLException {
+		List<Materia> idMateria = new ArrayList<Materia>();
+		
+		crearConexion();
+		
+		Statement st = conn.createStatement();
+		
+		ResultSet rs = st.executeQuery("select * from materia");
+		
+		while (rs.next()) {
+			Materia materia = new Materia();
+			
+			materia.setId(rs.getInt("id"));
+			materia.setAcronimo(rs.getString("acronimo"));
+			materia.setNombre(rs.getString("nombre"));
+			materia.setCursoId(rs.getInt("curso_id"));
+			
+			idMateria.add(materia);
+		}
+		
+		return idMateria;
+		
+	}
 
 }

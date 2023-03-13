@@ -1,6 +1,7 @@
 package centroEducativo.controller;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import centroEducativo.ConnectionManager;
 import centroEducativo.model.Curso;
+import centroEducativo.model.Estudiante;
 
 
 public class ControllerCurso {
@@ -164,5 +166,101 @@ public class ControllerCurso {
 		}
 		return listaId;
 	}
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
+	
+	public static int eliminarRegistro(int id) throws SQLException {
+		crearConexion();
+		
+		
+		
+		PreparedStatement ps = conn.prepareStatement("DELETE FROM curso WHERE id = ?;");
+		
+		ps.setInt(1, id);
+		
+		int row = ps.executeUpdate();
+		
+		return row;
+	}
+	
+	/**
+	 * @throws SQLException 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	public static int modificarRegistro(Curso cursoNuevo) throws SQLException {
+		crearConexion();
+		
+		PreparedStatement ps = conn.prepareStatement("UPDATE `centroeducativo`.`curso` SET `id` = ?, `nombre` = ?, `apellido1` = ?, `apellido2` = ?, `dni` = ?, `direccion` = ?, `email` = ?, `telefono` = ? Where id = " + cursoNuevo.getId() + ";");
+		
+		ps.setInt(1, cursoNuevo.getId());
+		ps.setString(2, cursoNuevo.getDescripcion());
+		
+		
+		int rows = ps.executeUpdate();
+		
+		return rows;
+		
+	}
+	
+	
+	
+	
+	/**
+	 * @throws SQLException 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	public static int insertarRegistro(Curso cursoNuevo) throws SQLException {
+		crearConexion();
+		PreparedStatement ps = conn.prepareStatement(
+				"insert into curso (id, nombre, apellido1, apellido2, dni, direccion, email, telefono) "
+				+ " values (?, ?, ?, ?, ?, ?, ?, ?)");
+		
+		int siguienteIdValida = siguienteIdValida();
+		ps.setInt(1, siguienteIdValida);
+		ps.setString(2, cursoNuevo.getDescripcion());
+
+
+		
+		
+		ps.execute();
+		
+		conn.close();
+		ps.close();
+		return siguienteIdValida;
+		
+	}
+	
+	/**
+	 * @throws SQLException 
+	 * 
+	 * 
+	 */
+	public static int siguienteIdValida() throws SQLException {
+		crearConexion();
+		int siguienteIdValida = 0;
+		Connection conn = ConnectionManager.getConexion();
+		
+		Statement st = conn.createStatement();
+		
+		
+		ResultSet rs = st.executeQuery("SELECT id FROM centroeducativo.curso order by id desc limit 1;");
+		
+		if (rs.next()) {
+			return siguienteIdValida = rs.getInt("id") + 1;
+		}
+		
+		return siguienteIdValida;
+	}
+	
 
 }

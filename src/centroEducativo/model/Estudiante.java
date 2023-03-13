@@ -11,9 +11,8 @@ private String email;
 private int telefono;
 
 
-public Estudiante(int telefono) {
+public Estudiante() {
 	super();
-	this.telefono = telefono;
 }
 
 

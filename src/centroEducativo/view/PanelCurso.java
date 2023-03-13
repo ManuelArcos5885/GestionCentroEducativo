@@ -3,6 +3,8 @@ package centroEducativo.view;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
@@ -10,7 +12,9 @@ import javax.swing.JTextField;
 
 import centroEducativo.ConnectionManager;
 import centroEducativo.controller.ControllerCurso;
+import centroEducativo.controller.ControllerMateria;
 import centroEducativo.model.Curso;
+import centroEducativo.model.Materia;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -163,15 +167,110 @@ public class PanelCurso extends JPanel {
 		add(panel_1, gbc_panel_1);
 		
 		JButton btnNewButton_4 = new JButton("Nuevo");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarCeldas();
+			}
+		});
 		panel_1.add(btnNewButton_4);
 		
 		JButton btnNewButton_6 = new JButton("Eliminar");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					eliminarRegistro();
+				} catch (NumberFormatException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel_1.add(btnNewButton_6);
 		
 		JButton btnNewButton = new JButton("Guardar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					guardar();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel_1.add(btnNewButton);
 
 	}
+	
+	public void eliminarRegistro() throws NumberFormatException, SQLException {
+		String[] opciones = new String[] {"Si","No"};
+		int eleccion = JOptionPane.showOptionDialog(null, "Esta seguro de que desea eliminar el registro", 
+				"EliminarRegistro", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, opciones, "Si");
+		
+		if (eleccion == JOptionPane.YES_OPTION) {
+		
+			int row = ControllerCurso.eliminarRegistro(Integer.parseInt(textField_Id.getText()));
+			
+			if (row !=1) {
+				JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "se ha eliminado correctamente el registro");
+				Curso curso = ControllerCurso.cargarPrimerRegistro();
+				textField_Id.setText("" + curso.getId());
+				textField_Descrip.setText(curso.getDescripcion());
+			}
+		}
+	}
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param materia
+	 * @throws SQLException
+	 */
+	
+	public void guardar() throws SQLException {
+		Curso cursoNueva = new Curso();
+		
+		cursoNueva.setId(Integer.parseInt(textField_Id.getText()));
+		cursoNueva.setDescripcion(textField_Descrip.getText());
+		
+
+		String error = "Algo a fallado";
+		if (cursoNueva.getId() == 0) {
+			int nuevoIdInsertado = ControllerCurso.insertarRegistro(cursoNueva);
+			if (nuevoIdInsertado < 1) {
+				JOptionPane.showMessageDialog(null, error);
+			}
+			
+			else {
+				textField_Id.setText("" + nuevoIdInsertado);
+				JOptionPane.showMessageDialog(null, "Se inserto correctamente");
+			}
+			
+		}
+		else {
+			if (ControllerCurso.modificarRegistro(cursoNueva) != 1) {
+				JOptionPane.showMessageDialog(null, error);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param materia
+	 * @throws SQLException
+	 */
+		
+		
+		public void limpiarCeldas() {
+			textField_Id.setText("" + 0);
+			textField_Descrip.setText("");
+
+		}
 	
 
 }

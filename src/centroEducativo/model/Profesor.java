@@ -11,9 +11,7 @@ private String email;
 private int telefono;
 
 
-public Profesor(int telefono) {
-	super();
-	this.telefono = telefono;
+public Profesor() {
 }
 
 
@@ -113,7 +111,7 @@ public void setTelefono(int telefono) {
 
 @Override
 public String toString() {
-	return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
+	return "Profesor [id=" + id + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
 			+ ", dni=" + dni + ", direccion=" + direccion + ", email=" + email + ", telefono=" + telefono + "]";
 }
 
